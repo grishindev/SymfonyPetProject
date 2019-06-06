@@ -14,6 +14,10 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class AttributeRepository extends ServiceEntityRepository
 {
+    /**
+     * AttributeRepository constructor.
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Attribute::class);
@@ -23,7 +27,7 @@ class AttributeRepository extends ServiceEntityRepository
     //  * @return Attribute[] Returns an array of Attribute objects
     //  */
     /*
-    public function findByExampleField($value)
+    public function findByExampleField(?string $value): array
     {
         return $this->createQueryBuilder('a')
             ->andWhere('a.exampleField = :val')

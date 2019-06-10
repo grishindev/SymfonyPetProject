@@ -30,14 +30,16 @@ class Review
     private $body;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reviews")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $user_id;
+    private $user;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="reviews")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $product_id;
+    private $product;
 
     /**
      * @ORM\Column(type="integer")
@@ -78,26 +80,26 @@ class Review
         return $this;
     }
 
-    public function getUserId(): ?int
+    public function getUser(): ?User
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(int $user_id): self
+    public function setUser(?User $user): self
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getProductId(): ?int
+    public function getProduct(): ?Product
     {
-        return $this->product_id;
+        return $this->product;
     }
 
-    public function setProductId(?int $product_id): self
+    public function setProduct(?Product $product): self
     {
-        $this->product_id = $product_id;
+        $this->product = $product;
 
         return $this;
     }

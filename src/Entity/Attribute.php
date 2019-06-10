@@ -29,6 +29,12 @@ class Attribute
      */
     private $value;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="attributes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $product;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -54,6 +60,18 @@ class Attribute
     public function setValue(?string $value): self
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -30,14 +32,31 @@ class Product
     private $price;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $attribute_id;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $status;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="product")
+     */
+    private $reviews;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Attribute", mappedBy="product")
+     */
+    private $attributes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="products")
+     */
+    private $categories;
+
+    public function __construct()
+    {
+        $this->reviews = new ArrayCollection();
+        $this->attributes = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -68,18 +87,6 @@ class Product
         return $this;
     }
 
-    public function getAttributeId(): ?int
-    {
-        return $this->attribute_id;
-    }
-
-    public function setAttributeId(?int $attribute_id): self
-    {
-        $this->attribute_id = $attribute_id;
-
-        return $this;
-    }
-
     public function getStatus(): ?string
     {
         return $this->status;
@@ -91,4 +98,93 @@ class Product
 
         return $this;
     }
+
+    /**
+     * @return Collection|Review[]
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): self
+    {
+        if ($this->reviews->contains($review)) {
+            $this->reviews->removeElement($review);
+            // set the owning side to null (unless already changed)
+            if ($review->getProduct() === $this) {
+                $review->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Attribute[]
+     */
+    public function getAttributes(): Collection
+    {
+        return $this->attributes;
+    }
+
+    public function addAttribute(Attribute $attribute): self
+    {
+        if (!$this->attributes->contains($attribute)) {
+            $this->attributes[] = $attribute;
+            $attribute->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttribute(Attribute $attribute): self
+    {
+        if ($this->attributes->contains($attribute)) {
+            $this->attributes->removeElement($attribute);
+            // set the owning side to null (unless already changed)
+            if ($attribute->getProduct() === $this) {
+                $attribute->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->contains($category)) {
+            $this->categories->removeElement($category);
+        }
+
+        return $this;
+    }
+
 }

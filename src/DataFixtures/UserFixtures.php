@@ -35,7 +35,7 @@ class UserFixtures extends Fixture
             $user->setFirstName($this->faker->firstName);
             $user->setLastName($this->faker->lastName);
             $user->setDob($this->faker->dateTimeBetween('-50 years', '-10 years'));
-            $user->setRole(rtrim(ucfirst(strtolower($this->faker->realText(10, 2))), "."));
+            $user->setRoles($this->faker->randomElements($array = array ('admin','user','moderator', 'user, moderator', NULL), 1));
             $user->setPhone($this->faker->phoneNumber);
             $user->setEmail($this->faker->email);
             $user->setPassword($this->faker->password);

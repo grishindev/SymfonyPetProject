@@ -34,7 +34,7 @@ class AttributeFixtures extends Fixture  implements DependentFixtureInterface
             }
 
             $attribute = new Attribute();
-            $attribute->setName(rtrim($this->faker->realText(10), ".")); // генерируем в faker значение для name
+            $attribute->setName(ucfirst($this->faker->word)); // генерируем в faker значение для name
             $attribute->setValue(rtrim($this->faker->realText(30), ".")); // сеттим value
             $attribute->setProduct($this->getReference(ProductFixtures::PRODUCT_REFERENCE . $y));
 

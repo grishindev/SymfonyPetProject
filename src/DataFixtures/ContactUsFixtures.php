@@ -34,7 +34,7 @@ class ContactUsFixtures extends Fixture
             $contact_us->setBody($this->faker->realText(300, 2));
             $contact_us->setAuthorName($this->faker->name);
             $contact_us->setAuthorEmail($this->faker->email);
-            $contact_us->setStatus(rtrim(ucfirst(strtolower($this->faker->realText(10, 2))), "."));
+            $contact_us->setStatus(strtolower($this->faker->word));
             $contact_us->setCreationDate($this->faker->dateTimeBetween('-6 years', 'now'));
 
             $manager->persist($contact_us);

@@ -35,7 +35,7 @@ class OrdersFixtures extends Fixture  implements DependentFixtureInterface
 
             $order = new Orders();
             $order->setUser($this->getReference(UserFixtures::USER_REFERENCE . $y));
-            $order->setStatus(rtrim(ucfirst(strtolower($this->faker->realText(10, 2))), "."));
+            $order->setStatus(strtolower($this->faker->word));
             $order->setCreationDate($this->faker->dateTimeBetween('-6 years', 'now'));
 
             $manager->persist($order);

@@ -32,19 +32,24 @@ class Category
     private $products;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Category", inversedBy="category", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="categories")
      */
     private $parent;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Category", mappedBy="parent", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="parent")
      */
-    private $category;
+    private $categories;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
 
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,30 +97,56 @@ class Category
         return $this;
     }
 
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
     public function getParent(): ?self
     {
         return $this->parent;
     }
 
-    public function setParent(self $parent): self
+    public function setParent(?self $parent): self
     {
         $this->parent = $parent;
 
         return $this;
     }
 
-    public function getCategory(): ?self
+    /**
+     * @return Collection|self[]
+     */
+    public function getCategories(): Collection
     {
-        return $this->category;
+        return $this->categories;
     }
 
-    public function setCategory(self $category): self
+    public function addCategory(self $category): self
     {
-        $this->category = $category;
-
-        // set the owning side of the relation if necessary
-        if ($this !== $category->getParent()) {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
             $category->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(self $category): self
+    {
+        if ($this->categories->contains($category)) {
+            $this->categories->removeElement($category);
+            // set the owning side to null (unless already changed)
+            if ($category->getParent() === $this) {
+                $category->setParent(null);
+            }
         }
 
         return $this;

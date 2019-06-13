@@ -51,6 +51,11 @@ class Product
      */
     private $categories;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
@@ -173,6 +178,7 @@ class Product
     {
         if (!$this->categories->contains($category)) {
             $this->categories[] = $category;
+            $category->getProducts($this);
         }
 
         return $this;
@@ -187,4 +193,15 @@ class Product
         return $this;
     }
 
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
 }

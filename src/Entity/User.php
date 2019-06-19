@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -20,7 +22,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $first_name;
 
@@ -194,17 +196,17 @@ class User implements UserInterface
         return $this;
     }
 
-//    /**
-//     * @see UserInterface
-//     */
+    /**
+     * @see UserInterface
+     */
     public function getPassword(): ?string
     {
         return $this->password;
     }
 
-//    /**
-//     * @see UserInterface
-//     */
+    /**
+     * @see UserInterface
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;

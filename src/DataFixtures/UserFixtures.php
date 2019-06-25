@@ -7,6 +7,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Cocur\Slugify\Slugify;
 use Faker\Factory;
 use App\Entity\User;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 class UserFixtures extends Fixture
@@ -16,11 +17,16 @@ class UserFixtures extends Fixture
     private $faker;
 
     private $slug;
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $passwordEncoder;
 
-    public function __construct(Slugify $slugify)
+    public function __construct(Slugify $slugify, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->faker = Factory::create();
         $this->slug = $slugify;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     public function load(ObjectManager $manager)
@@ -38,7 +44,10 @@ class UserFixtures extends Fixture
             $user->setRoles($this->faker->randomElements($array = array ('admin','user','moderator', 'user, moderator', NULL), 1));
             $user->setPhone($this->faker->phoneNumber);
             $user->setEmail($this->faker->email);
-            $user->setPassword($this->faker->password);
+            $user->setPassword($this->passwordEncoder->encodePassword(
+                $user,
+                'qazwsx'
+            ));
             $user->setZip($this->faker->postcode);
             $user->setCountry($this->faker->country);
             $user->setRegion(ucfirst($this->faker->word));

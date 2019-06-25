@@ -47,7 +47,7 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $password;
 
@@ -206,6 +206,8 @@ class User implements UserInterface
 
     /**
      * @see UserInterface
+     * @param string $password
+     * @return User
      */
     public function setPassword(string $password): self
     {
@@ -220,6 +222,7 @@ class User implements UserInterface
     public function getSalt()
     {
         // not needed for apps that do not check user passwords
+        // not needed when using bcrypt or argon
     }
 
     /**

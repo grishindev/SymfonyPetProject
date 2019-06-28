@@ -36,3 +36,10 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        # - { path: ^/account, roles: IS_AUTHENTICATED_FULLY }
+#        # 3. но разрешаем /login быть доступным для анонимных пользователей
+#        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        # 2. требуем от пользователя полной авторизации для смены пароля
+#        - { path: ^/change-password, roles: IS_AUTHENTICATED_FULLY }
+#        # 1. принудительно защищаем каждый URL
+#        - { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }

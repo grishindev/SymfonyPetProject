@@ -41,13 +41,16 @@ class UserFixtures extends Fixture
             $user->setFirstName($this->faker->firstName);
             $user->setLastName($this->faker->lastName);
             $user->setDob($this->faker->dateTimeBetween('-50 years', '-10 years'));
-            $user->setRoles($this->faker->randomElements($array = ['ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_ADMIN, ROLE_MODERATOR', NULL], 1));
+            $user->setRoles($this->faker->randomElements($array = ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_ADMIN, ROLE_MODERATOR'], 1));
             $user->setPhone($this->faker->phoneNumber);
             $user->setEmail($this->faker->email);
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
                 'qazwsx'
             ));
+            if ($this->faker->boolean) {
+                $user->setTwitterUsername($this->faker->userName);
+            }
             $user->setZip($this->faker->postcode);
             $user->setCountry($this->faker->country);
             $user->setRegion(ucfirst($this->faker->word));

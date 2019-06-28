@@ -52,6 +52,11 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $twitterUsername;
+
+    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -167,6 +172,16 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getAvatarUrl(string $size = null): string
+    {
+        $url = 'https://robohash.org/'.$this->getEmail();
+
+        if ($size)
+            $url .= sprintf('?size=%dx%d', $size, $size);
+
+        return $url;
+    }
+
     /**
      * A visual identifier that represents this user.
      *
@@ -232,6 +247,18 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getTwitterUsername(): ?string
+    {
+        return $this->twitterUsername;
+    }
+
+    public function setTwitterUsername(?string $twitterUsername): self
+    {
+        $this->twitterUsername = $twitterUsername;
+
+        return $this;
     }
 
     public function getZip(): ?string

@@ -32,12 +32,12 @@ class ContactUs
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $author_name;
+    private $authorName;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $author_email;
+    private $authorEmail;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -47,7 +47,7 @@ class ContactUs
     /**
      * @ORM\Column(type="datetime")
      */
-    private $creation_date;
+    private $creationDate;
 
     public function getId(): ?int
     {
@@ -80,24 +80,24 @@ class ContactUs
 
     public function getAuthorName(): ?string
     {
-        return $this->author_name;
+        return $this->authorName;
     }
 
-    public function setAuthorName(string $author_name): self
+    public function setAuthorName(string $authorName): self
     {
-        $this->author_name = $author_name;
+        $this->authorName = $authorName;
 
         return $this;
     }
 
     public function getAuthorEmail(): ?string
     {
-        return $this->author_email;
+        return $this->authorEmail;
     }
 
-    public function setAuthorEmail(?string $author_email): self
+    public function setAuthorEmail(?string $authorEmail): self
     {
-        $this->author_email = $author_email;
+        $this->authorEmail = $authorEmail;
 
         return $this;
     }
@@ -116,12 +116,12 @@ class ContactUs
 
     public function getCreationDate(): ?\DateTimeInterface
     {
-        return $this->creation_date;
+        return $this->creationDate;
     }
 
-    public function setCreationDate(\DateTimeInterface $creation_date): self
+    public function setCreationDate(\DateTimeInterface $creationDate): self
     {
-        $this->creation_date = $creation_date;
+        $this->creationDate = $creationDate;
 
         return $this;
     }

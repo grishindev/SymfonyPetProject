@@ -49,7 +49,7 @@ class Review
     /**
      * @ORM\Column(type="datetime")
      */
-    private $creation_date;
+    private $creationDate;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -123,12 +123,12 @@ class Review
 
     public function getCreationDate(): ?\DateTimeInterface
     {
-        return $this->creation_date;
+        return $this->creationDate;
     }
 
-    public function setCreationDate(\DateTimeInterface $creation_date): self
+    public function setCreationDate(\DateTimeInterface $creationDate): self
     {
-        $this->creation_date = $creation_date;
+        $this->creationDate = $creationDate;
 
         return $this;
     }

@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}PetSymfo- Wellcome!{% endblock %}</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon.ico') }}">
     {% block stylesheets %}
         <!-- Google font -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -48,6 +49,9 @@
 
                     {% if is_granted('ROLE_USER') %}
                         <li><a href="{{ path('app_account') }}"><i class="fa fa-user-o"></i> My Account</a></li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li><a href="{{ path('easyadmin') }}"><i class="fa fa-key"></i> Admin panel</a></li>
+                        {% endif %}
                         <li><a href="{{ path('app_logout') }}"><i class="fa fa-sign-out"></i> Logout</a></li>
                     {% else %}
                         <li><a href="{{ path('app_login') }}"><i class="fa fa-sign-in"></i> Login</a></li>

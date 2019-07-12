@@ -6,7 +6,7 @@ SYMFONY PET PROJECT
 
 Фронтенд - используется шаблон "Electro" - https://freehtmlthemes.ru/templates/ecommerce/template-224
 
-Админпанель - ...
+Админпанель - EasyAdminBundle
 
 Версия Symfony - 4.3
 

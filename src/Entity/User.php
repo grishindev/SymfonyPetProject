@@ -136,6 +136,17 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getFullName()
+    {
+        return $this->getFirstName() . ' ' . $this->getLastName();
+    }
+
+    public function getIsEligible()
+
+    {
+        return random_int(0, 1);
+    }
+
     public function getDob(): ?\DateTimeInterface
     {
         return $this->dob;

@@ -1,27 +1,4 @@
 easy_admin:
-    entities:
-        # List the entity class name you want to manage
-        User:
-            class: App\Entity\User
-            label: 'Users list'
-        Category:
-            class: App\Entity\Category
-            label: 'Categories'
-        Product:
-            class: App\Entity\Product
-            label: 'Products list'
-            icon: 'shopping-basket'
-        Attribute:
-            class: App\Entity\Attribute
-            label: 'Attributes'
-        Review:
-            class: App\Entity\Review
-            label: 'Reviews'
-        Orders:
-            class: App\Entity\Orders
-        ContactUs:
-            class: App\Entity\ContactUs
-            label: 'Feedback'
     site_name: '<img src="../img/logo.png" /><br />PetSymfo <em style="font-size: 80%;">Megacorp.</em>'
     user:
         display_name: true
@@ -35,6 +12,133 @@ easy_admin:
             css:
                 - 'css/admin.css'
         menu:
-            - { entity: 'User', , icon: 'users', children: ['User', 'Orders'], label: 'Users' }
-            - { entity: 'Product', icon: 'shopping-basket', children: ['Product', 'Category', 'Attribute', 'Review'], label: 'Products' }
-            - { entity: 'ContactUs', icon: 'envelope', label: 'Feedback' }
+            - { icon: 'users', children:
+              [
+                { entity: 'User', icon: 'list-ul' },
+                { entity: 'Orders', icon: 'shopping-cart' },
+              ],
+                label: 'Users' }
+            - { icon: 'shopping-bag', children:
+              [
+               { entity: 'Product', icon: 'list-ol' },
+               { entity: 'Category', icon: 'sitemap' },
+               { entity: 'Attribute', icon: 'tags' },
+               { entity: 'Review', icon: 'pencil-square-o' },
+              ], label: 'Products' }
+            - { entity: 'ContactUs', icon: 'envelope', label: 'Feedback', target: '_blank' }
+            - { label: '________________' }
+            - { label: 'Main site', route: 'app_home', icon: 'globe' }
+    list:
+        max_results: 20
+        collapse_actions: true
+        batch_actions: ['delete']
+    show:
+    search:
+    formats:
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y --|-- H:i:s'
+        number: '%.2f'
+
+    entities:
+        # List the entity class name you want to manage
+        User:
+            class: App\Entity\User
+            label: 'All users'
+            help: 'Global message displayed in all User`s views'
+            list:
+                title: "List of all users"
+                #                help: 'Local message displayed in all list User`s view'
+                max_results: 10
+                fields:
+                    - id
+                    - fullName
+                    - { property: 'is_eligible',  type: 'toggle' }
+                    - dob
+                    - { property: 'country', css_class: text-center, type: 'country', with_name: false }
+                    - { property: 'phone', sortable: false, type: 'tel' }
+                    - { property: 'email', label: 'Contact', css_class: text-left, sortable: true, type: 'email' }
+                    - { property: 'twitterUsername', label: 'Twitter' }
+                sort: ['id', 'ASC']
+                filters: ['id', 'phone', 'email']
+                actions:
+                    - { name: 'new', label: 'Add User', icon: 'user-plus' }
+                    - { name: 'edit', icon: 'wrench' }
+                    - { name: 'delete', icon: 'trash' }
+
+        Category:
+            class: App\Entity\Category
+            label: 'Categories'
+            list:
+                title: "List of all products categories"
+                sort: ['id', 'ASC']
+                actions:
+                    - { name: 'new', label: 'Add Category', icon: 'plus' }
+                    - { name: 'edit', icon: 'wrench' }
+                    - { name: 'delete', icon: 'trash' }
+
+        Product:
+            class: App\Entity\Product
+            label: 'All products'
+            list:
+                title: "List of all products"
+                sort: ['id', 'ASC']
+                dql_filter: 'entity.price > 700'
+                fields:
+                    - id
+                    - name
+                    - { property: 'price' }
+                    - status
+                    - reviews
+                    - attributes
+                    - categories
+                    - { property: 'slug', type: 'url', label: 'Product link' }
+                actions:
+                    - { name: 'new', label: 'Add Product', icon: 'plus' }
+                    - { name: 'edit', icon: 'wrench' }
+                    - { name: 'delete', icon: 'trash' }
+
+        Attribute:
+            class: App\Entity\Attribute
+            label: 'Attributes'
+            list:
+                title: "List of all products attributes"
+                sort: ['id', 'ASC']
+                actions:
+                    - { name: 'new', label: 'Add Attribute', icon: 'plus' }
+                    - { name: 'edit', icon: 'wrench' }
+                    - { name: 'delete', icon: 'trash' }
+
+        Review:
+            class: App\Entity\Review
+            label: 'Reviews'
+            list:
+                title: "List of all reviews about products"
+                sort: ['id', 'ASC']
+                collapse_actions: false
+                actions:
+                    - { name: '-new' }
+                    - { name: '-edit' }
+                    - { name: 'delete', icon: 'trash' }
+
+        Orders:
+            class: App\Entity\Orders
+            list:
+                title: "List of all orders"
+                sort: ['id', 'ASC']
+                actions:
+                    - { name: 'new', label: 'Add Order', icon: 'cart-plus' }
+                    - { name: 'edit', icon: 'wrench' }
+                    - { name: 'delete', icon: 'trash' }
+
+        ContactUs:
+            class: App\Entity\ContactUs
+            label: 'Feedback'
+            list:
+                title: "List of all feedback from users"
+                filters: ['creationDate']
+                collapse_actions: false
+                actions:
+                    - { name: '-new' }
+                    - { name: '-edit' }
+                    - { name: 'delete', icon: 'trash' }
